@@ -166,16 +166,16 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
       </motion.div>
 
       {/* Ana İçerik */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-3 gap-8 md:gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 items-start">
           {/* Sol Kolon - Kitap Görseli ve Oynatıcı */}
-          <div className="md:col-span-1 space-y-8">
+          <div className="md:col-span-1 space-y-6 sm:space-y-8">
             {/* Kitap Görseli */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-100 to-purple-100 relative group cursor-pointer"
+              className="max-w-xs mx-auto md:max-w-none aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-100 to-purple-100 relative group cursor-pointer"
             >
               <div className="absolute inset-0 flex items-center justify-center">
                 <Volume2 className="h-24 w-24 text-indigo-400 opacity-20 group-hover:opacity-30 transition-opacity" />
@@ -200,7 +200,7 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-lg p-6 space-y-6"
+              className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 space-y-4 sm:space-y-6"
             >
               {/* Şu anki bölüm */}
               <div className="mb-4">
@@ -227,24 +227,24 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               </div>
 
               {/* Oynatma Kontrolleri */}
-              <div className="flex items-center justify-center gap-6">
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
                 <Button
                   variant="ghost"
                   size="icon"
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                   onClick={handleRewind}
                 >
-                  <Rewind className="h-6 w-6" />
+                  <Rewind className="h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
                 <Button
                   size="lg"
-                  className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => setIsPlaying(!isPlaying)}
                 >
                   {isPlaying ? (
-                    <Pause className="h-8 w-8" />
+                    <Pause className="h-6 w-6 sm:h-8 sm:w-8" />
                   ) : (
-                    <Play className="h-8 w-8" />
+                    <Play className="h-6 w-6 sm:h-8 sm:w-8" />
                   )}
                 </Button>
                 <Button
@@ -253,7 +253,7 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                   onClick={handleForward}
                 >
-                  <Forward className="h-6 w-6" />
+                  <Forward className="h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
               </div>
 
@@ -323,7 +323,7 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-white rounded-2xl shadow-lg p-6 space-y-4"
+              className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 space-y-4"
             >
               <h3 className="font-semibold text-gray-900 flex items-center">
                 <BarChart2 className="h-5 w-5 mr-2 text-indigo-600" />
@@ -347,34 +347,34 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
           </div>
 
           {/* Orta ve Sağ Kolonlar */}
-          <div className="md:col-span-2 space-y-8">
+          <div className="md:col-span-2 space-y-6 sm:space-y-8">
             {/* Başlık ve Yazar */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <div className="flex items-start justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-0">
                 <div>
-                  <div className="flex items-center mb-2">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
                     <span className="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full">{book.category}</span>
-                    <span className="ml-2 px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full flex items-center">
+                    <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full flex items-center">
                       <Headphones className="h-3 w-3 mr-1" />
                       Sesli Kitap
                     </span>
                   </div>
-                  <h1 className="text-4xl font-bold text-gray-900 mb-2 leading-tight">{book.title}</h1>
-                  <p className="text-xl text-gray-600">{book.author}</p>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">{book.title}</h1>
+                  <p className="text-lg sm:text-xl text-gray-600">{book.author}</p>
                   <p className="text-gray-500 flex items-center mt-1">
                     <Headphones className="h-4 w-4 mr-1 text-indigo-600" />
                     Seslendiren: {book.narrator}
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-indigo-600/10 to-purple-600/10 p-4 rounded-2xl text-center">
+                <div className="bg-gradient-to-br from-indigo-600/10 to-purple-600/10 p-4 rounded-2xl text-center sm:min-w-[150px]">
                   <p className="text-sm text-gray-500 mb-1">Fiyat</p>
-                  <p className="text-2xl font-bold text-gray-900">{book.price}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900">{book.price}</p>
                   <Button
-                    size="lg"
+                    size="default"
                     className="mt-3 w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-300"
                   >
                     Hemen Satın Al
@@ -383,19 +383,19 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               </div>
 
               {/* Değerlendirme */}
-              <div className="flex items-center gap-4 mt-6">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-4 sm:mt-6">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="h-5 w-5"
+                      className="h-4 w-4 sm:h-5 sm:w-5"
                       fill={i < Math.floor(book.rating) ? "#FCD34D" : "none"}
                       stroke={i < Math.floor(book.rating) ? "#FCD34D" : "#D1D5DB"}
                     />
                   ))}
                 </div>
-                <span className="text-lg font-semibold text-gray-900">{book.rating}</span>
-                <span className="text-gray-500">({book.ratingCount.toLocaleString()} değerlendirme)</span>
+                <span className="text-base sm:text-lg font-semibold text-gray-900">{book.rating}</span>
+                <span className="text-sm sm:text-base text-gray-500">({book.ratingCount.toLocaleString()} değerlendirme)</span>
               </div>
             </motion.div>
 
@@ -404,42 +404,42 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="border-b border-gray-200"
+              className="border-b border-gray-200 overflow-x-auto scrollbar-hide"
             >
-              <div className="flex gap-6">
+              <div className="flex gap-4 sm:gap-6 min-w-max pb-1">
                 <button
-                  className={`pb-4 text-sm font-medium ${activeTab === "description" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
+                  className={`pb-3 text-xs sm:text-sm font-medium ${activeTab === "description" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
                   onClick={() => setActiveTab("description")}
                 >
                   <div className="flex items-center">
-                    <FileText className="h-4 w-4 mr-2" />
+                    <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Kitap Hakkında
                   </div>
                 </button>
                 <button
-                  className={`pb-4 text-sm font-medium ${activeTab === "details" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
+                  className={`pb-3 text-xs sm:text-sm font-medium ${activeTab === "details" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
                   onClick={() => setActiveTab("details")}
                 >
                   <div className="flex items-center">
-                    <Info className="h-4 w-4 mr-2" />
+                    <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Detaylar
                   </div>
                 </button>
                 <button
-                  className={`pb-4 text-sm font-medium ${activeTab === "reviews" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
+                  className={`pb-3 text-xs sm:text-sm font-medium ${activeTab === "reviews" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
                   onClick={() => setActiveTab("reviews")}
                 >
                   <div className="flex items-center">
-                    <MessageCircle className="h-4 w-4 mr-2" />
+                    <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Değerlendirmeler
                   </div>
                 </button>
                 <button
-                  className={`pb-4 text-sm font-medium ${activeTab === "chapters" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
+                  className={`pb-3 text-xs sm:text-sm font-medium ${activeTab === "chapters" ? "text-indigo-600 border-b-2 border-indigo-600" : "text-gray-500 hover:text-gray-900"}`}
                   onClick={() => setActiveTab("chapters")}
                 >
                   <div className="flex items-center">
-                    <List className="h-4 w-4 mr-2" />
+                    <List className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     Bölümler
                   </div>
                 </button>
@@ -452,30 +452,30 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-4 sm:p-6"
             >
               {activeTab === "description" && (
                 <div className="prose prose-indigo max-w-none">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Özet</h3>
-                  <p className="text-gray-700 leading-relaxed mb-6">{book.description}</p>
-                  <p className="text-gray-700 leading-relaxed mb-6">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Özet</h3>
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4 sm:mb-6">{book.description}</p>
+                  <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4 sm:mb-6">
                     Bu kitapta, günlük düşünce tuzaklarını tanımlayarak, zihnimizin nasıl daha net çalışabileceğini keşfedeceksiniz. Modern psikoloji araştırmalarının ışığında, yazarımız Joseph Nguyen, bilişsel önyargılardan kurtulmanın pratik yollarını sizlerle paylaşıyor.
                   </p>
-                  <div className="flex gap-4 flex-wrap mt-8">
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full flex items-center">
-                      <Tag className="h-3 w-3 mr-1" />
+                  <div className="flex gap-2 sm:gap-4 flex-wrap mt-6 sm:mt-8">
+                    <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-800 text-xs sm:text-sm rounded-full flex items-center">
+                      <Tag className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
                       Psikoloji
                     </span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full flex items-center">
-                      <Tag className="h-3 w-3 mr-1" />
+                    <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-800 text-xs sm:text-sm rounded-full flex items-center">
+                      <Tag className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
                       Kişisel Gelişim
                     </span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full flex items-center">
-                      <Tag className="h-3 w-3 mr-1" />
+                    <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-800 text-xs sm:text-sm rounded-full flex items-center">
+                      <Tag className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
                       Zihin
                     </span>
-                    <span className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full flex items-center">
-                      <Tag className="h-3 w-3 mr-1" />
+                    <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-800 text-xs sm:text-sm rounded-full flex items-center">
+                      <Tag className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
                       Düşünce
                     </span>
                   </div>
@@ -484,71 +484,71 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
 
               {activeTab === "details" && (
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Kitap Detayları</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Kitap Detayları</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-start">
-                        <Clock className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <Clock className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Süre</h4>
-                          <p className="text-gray-700">{book.duration}</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Süre</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">{book.duration}</p>
                         </div>
                       </div>
                       <div className="flex items-start">
-                        <Calendar className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <Calendar className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Yayın Tarihi</h4>
-                          <p className="text-gray-700">{book.releaseDate}</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Yayın Tarihi</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">{book.releaseDate}</p>
                         </div>
                       </div>
                       <div className="flex items-start">
-                        <BookOpen className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <BookOpen className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Yayınevi</h4>
-                          <p className="text-gray-700">{book.publisher}</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Yayınevi</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">{book.publisher}</p>
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-start">
-                        <Headphones className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <Headphones className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Dil</h4>
-                          <p className="text-gray-700">{book.language}</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Dil</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">{book.language}</p>
                         </div>
                       </div>
                       <div className="flex items-start">
-                        <Menu className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <Menu className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Kategori</h4>
-                          <p className="text-gray-700">{book.category}</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Kategori</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">{book.category}</p>
                         </div>
                       </div>
                       <div className="flex items-start">
-                        <Award className="h-5 w-5 text-indigo-600 mt-1 mr-3 flex-shrink-0" />
+                        <Award className="h-4 sm:h-5 w-4 sm:w-5 text-indigo-600 mt-1 mr-2 sm:mr-3 flex-shrink-0" />
                         <div>
-                          <h4 className="text-sm font-medium text-gray-900">Ödüller</h4>
-                          <p className="text-gray-700">2024 Yılın En İyi Sesli Kitabı Finalisti</p>
+                          <h4 className="text-xs sm:text-sm font-medium text-gray-900">Ödüller</h4>
+                          <p className="text-xs sm:text-sm text-gray-700">2024 Yılın En İyi Sesli Kitabı Finalisti</p>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-4">Değerlendirme Dağılımı</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mt-6 sm:mt-8 mb-3 sm:mb-4">Değerlendirme Dağılımı</h3>
                   <div className="space-y-2">
                     {ratingDistribution.map((item) => (
-                      <div key={item.stars} className="flex items-center gap-3">
-                        <div className="flex items-center w-20">
-                          <span className="text-sm text-gray-700">{item.stars}</span>
-                          <Star className="h-4 w-4 text-yellow-400 ml-1" fill="#FCD34D" />
+                      <div key={item.stars} className="flex items-center gap-2 sm:gap-3">
+                        <div className="flex items-center w-16 sm:w-20">
+                          <span className="text-xs sm:text-sm text-gray-700">{item.stars}</span>
+                          <Star className="h-3 sm:h-4 w-3 sm:w-4 text-yellow-400 ml-1" fill="#FCD34D" />
                         </div>
-                        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="flex-1 h-1.5 sm:h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-yellow-400 rounded-full"
                             style={{ width: `${item.percentage}%` }}
                           ></div>
                         </div>
-                        <span className="text-sm text-gray-700 w-10">{item.percentage}%</span>
+                        <span className="text-xs sm:text-sm text-gray-700 w-8 sm:w-10">{item.percentage}%</span>
                       </div>
                     ))}
                   </div>
@@ -557,49 +557,51 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
 
               {activeTab === "reviews" && (
                 <div>
-                  <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-xl font-semibold text-gray-900">Değerlendirmeler</h3>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-4 sm:mb-6">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Değerlendirmeler</h3>
                     <Button
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                      size="sm" 
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white sm:text-sm"
                     >
                       Değerlendirme Yaz
                     </Button>
                   </div>
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {reviews.map((review) => (
-                      <div key={review.id} className="border-b border-gray-200 pb-6 last:border-0">
-                        <div className="flex justify-between items-start">
+                      <div key={review.id} className="border-b border-gray-200 pb-4 sm:pb-6 last:border-0">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0">
                           <div>
-                            <h4 className="font-medium text-gray-900">{review.user}</h4>
+                            <h4 className="font-medium text-gray-900 text-sm sm:text-base">{review.user}</h4>
                             <div className="flex items-center gap-2 mt-1">
                               <div className="flex">
                                 {[...Array(5)].map((_, i) => (
                                   <Star
                                     key={i}
-                                    className="h-4 w-4"
+                                    className="h-3 w-3 sm:h-4 sm:w-4"
                                     fill={i < review.rating ? "#FCD34D" : "none"}
                                     stroke={i < review.rating ? "#FCD34D" : "#D1D5DB"}
                                   />
                                 ))}
                               </div>
-                              <span className="text-sm text-gray-500">{review.date}</span>
+                              <span className="text-xs sm:text-sm text-gray-500">{review.date}</span>
                             </div>
                           </div>
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="text-gray-500 hover:text-indigo-600"
+                            className="text-gray-500 hover:text-indigo-600 text-xs sm:text-sm"
                           >
-                            <Heart className="h-4 w-4 mr-1" /> {review.likes}
+                            <Heart className="h-3 w-3 sm:h-4 sm:w-4 mr-1" /> {review.likes}
                           </Button>
                         </div>
-                        <p className="mt-3 text-gray-700">{review.text}</p>
+                        <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-700">{review.text}</p>
                       </div>
                     ))}
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full mt-4 text-indigo-600 border-indigo-600 hover:bg-indigo-50"
+                    size="sm"
+                    className="w-full mt-4 text-indigo-600 border-indigo-600 hover:bg-indigo-50 text-xs sm:text-sm"
                   >
                     Tüm Değerlendirmeleri Gör
                   </Button>
@@ -608,28 +610,28 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
 
               {activeTab === "chapters" && (
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Bölüm Listesi</h3>
-                  <div className="space-y-3">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Bölüm Listesi</h3>
+                  <div className="space-y-2 sm:space-y-3">
                     {[1, 2, 3, 4, 5].map((chapter) => (
                       <div 
                         key={chapter} 
-                        className="flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition cursor-pointer group"
+                        className="flex items-center justify-between p-3 sm:p-4 rounded-xl hover:bg-gray-50 transition cursor-pointer group"
                       >
-                        <div className="flex items-center gap-4">
-                          <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-medium">
+                        <div className="flex items-center gap-2 sm:gap-4">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-medium text-xs sm:text-sm">
                             {chapter}
                           </div>
                           <div>
-                            <h4 className="font-medium text-gray-900">Bölüm {chapter}</h4>
-                            <p className="text-sm text-gray-500">{Math.floor(Math.random() * 30) + 10} dakika</p>
+                            <h4 className="font-medium text-gray-900 text-xs sm:text-sm">Bölüm {chapter}</h4>
+                            <p className="text-xs text-gray-500">{Math.floor(Math.random() * 30) + 10} dakika</p>
                           </div>
                         </div>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="text-gray-400 opacity-0 group-hover:opacity-100 transition"
+                          className="text-gray-400 opacity-0 group-hover:opacity-100 transition h-6 w-6 sm:h-8 sm:w-8"
                         >
-                          <Play className="h-5 w-5" />
+                          <Play className="h-3 w-3 sm:h-5 sm:w-5" />
                         </Button>
                       </div>
                     ))}
@@ -643,29 +645,25 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-white rounded-2xl shadow-lg p-6"
+              className="bg-white rounded-2xl shadow-lg p-4 sm:p-6"
             >
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Benzer Kitaplar</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4">Benzer Kitaplar</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
                 {similarBooks.map((similarBook) => (
                   <Link href={`/book/${similarBook.id}`} key={similarBook.id} className="group">
-                    <div className="aspect-[3/4] rounded-lg overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 mb-2 shadow-md group-hover:shadow-lg transition relative">
+                    <div className="aspect-[3/4] rounded-lg overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 mb-1 sm:mb-2 shadow-md group-hover:shadow-lg transition relative">
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <BookOpen className="h-12 w-12 text-indigo-400 opacity-30" />
+                        <BookOpen className="h-8 w-8 sm:h-12 sm:w-12 text-indigo-400 opacity-30" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                        <div className="p-3 text-white">
-                          <p className="font-medium">{similarBook.title}</p>
-                          <p className="text-sm opacity-80">{similarBook.author}</p>
+                        <div className="p-2 sm:p-3 text-white">
+                          <p className="font-medium text-xs sm:text-sm">{similarBook.title}</p>
+                          <p className="text-xs opacity-80">{similarBook.author}</p>
                         </div>
                       </div>
                     </div>
-                    <h4 className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors truncate">{similarBook.title}</h4>
-                    <p className="text-sm text-gray-500 truncate">{similarBook.author}</p>
-                    <div className="flex items-center mt-1">
-                      <Star className="h-3 w-3 text-yellow-400" fill="#FCD34D" />
-                      <span className="text-xs text-gray-500 ml-1">{similarBook.rating}</span>
-                    </div>
+                    <h4 className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors truncate text-xs sm:text-sm">{similarBook.title}</h4>
+                    <p className="text-xs text-gray-500 truncate">{similarBook.author}</p>
                   </Link>
                 ))}
               </div>
@@ -676,3 +674,4 @@ export default function BookDetailClient({ book }: BookDetailClientProps) {
     </div>
   );
 } 
+

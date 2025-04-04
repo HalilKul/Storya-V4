@@ -93,6 +93,32 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Scroll çubuğunu gizleme stilleri */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Tüm sitede scrollbar'ları gizle veya özelleştir */
+::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none !important;
+}
+
+html {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
 /* Özel mobil CSS iyileştirmeleri */
 @media (max-width: 640px) {
   /* Sayfa kaydırma davranışını iyileştir */
@@ -245,5 +271,89 @@
   .horizontal-scroll {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+  }
+}
+
+/* Extra small ekran boyutlarını varsayılan Tailwind breakpointlerine ekle */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Extra small ekran boyutu için özel stillendirme */
+@media (min-width: 475px) {
+  .xs\:w-\[140px\] {
+    width: 140px;
+  }
+  .xs\:p-3 {
+    padding: 0.75rem;
+  }
+  .xs\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .xs\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  .xs\:mt-2 {
+    margin-top: 0.5rem;
+  }
+  .xs\:h-3 {
+    height: 0.75rem;
+  }
+  .xs\:w-3 {
+    width: 0.75rem;
+  }
+  .xs\:w-8 {
+    width: 2rem;
+  }
+  .xs\:gap-6 {
+    gap: 1.5rem;
+  }
+  .xs\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .xs\:space-y-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .xs\:mb-8 {
+    margin-bottom: 2rem;
+  }
+  .xs\:flex-row {
+    flex-direction: row;
+  }
+  .xs\:gap-4 {
+    gap: 1rem;
+  }
+  .xs\:pt-4 {
+    padding-top: 1rem;
+  }
+  .xs\:min-h-\[44px\] {
+    min-height: 44px;
+  }
+  .xs\:py-2\.5 {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+  .xs\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+  .xs\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+  .xs\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .xs\:col-span-1 {
+    grid-column: span 1 / span 1;
   }
 }

@@ -244,26 +244,40 @@ const books = [
   }
 ];
 
+// Kitap ID'lerine göre adlar - Sistemde henüz olmayan kitaplar için
+const bookTitles: {[key: string]: string} = {
+  "104": "Aşk ve Gurur",
+  "105": "Dracula",
+  "106": "Sherlock Holmes'un Maceraları",
+  "107": "Frankenstein",
+  "109": "Faust",
+  "111": "Oliver Twist", 
+  "112": "Madame Bovary",
+  "114": "Robinson Crusoe",
+  "115": "Gulliver'in Gezileri",
+  "116": "Candide",
+  "118": "Alice Harikalar Diyarında",
+  "119": "Dorian Gray'in Portresi",
+  "120": "Tom Sawyer'ın Maceraları"
+};
+
 export async function generateStaticParams() {
-  // Tüm kitap ID'lerini döndür
-  return books.map((book) => ({
-    id: book.id,
-  }));
+  // Yorum satırını kaldırıp, alternatif yöntemi kullanıyoruz
+  // Tüm kitap ID'lerini döndür yerine, tüm olası ID'leri kapsayan bir dizi oluşturuyoruz
+  const allPossibleIds: { id: string }[] = [];
   
-  // Eğer bu yöntem işe yaramazsa, alternatif olarak 1'den 150'ye kadar tüm olası ID'leri kapsayan bir dizi oluşturabilirsiniz:
-  /*
-  const allPossibleIds = [];
   // Normal ID'ler (1-20)
   for (let i = 1; i <= 20; i++) {
     allPossibleIds.push({ id: i.toString() });
   }
+  
   // Özel ID'ler (100-150 arası)
   for (let i = 100; i <= 150; i++) {
     allPossibleIds.push({ id: i.toString() });
   }
   
   // Özel olarak belirtilmiş ID'ler
-  const specialIds = ["17"];
+  const specialIds = ["17", "101", "104", "105", "106", "107", "109", "111", "112", "114", "115", "116", "117", "118", "119", "120"];
   specialIds.forEach(id => {
     if (!allPossibleIds.some(item => item.id === id)) {
       allPossibleIds.push({ id });
@@ -271,31 +285,57 @@ export async function generateStaticParams() {
   });
   
   return allPossibleIds;
-  */
 }
 
 export default function BookDetail({ params }: { params: { id: string } }) {
-  // Kitap bulunamazsa 404 sayfası göster yerine, varsayılan bir kitap bilgisi göster
+  // Books dizisinde zaten tanımlı olan kitapları bul
   let book = books.find((b) => b.id === params.id);
   
-  // Eğer kitap bulunamazsa yeni bir kitap nesnesi oluştur
+  // Eğer kitap bulunamazsa ve ID "15" (Simyacı) ise, Simyacı'yı göster
+  if (!book && params.id === "15") {
+    book = {
+      id: "15",
+      title: "Simyacı",
+      author: "Paulo Coelho",
+      narrator: "Mehmet Günsür",
+      cover: "/book-cover.jpg",
+      rating: 4.7,
+      ratingCount: 3850,
+      description: "Kişisel efsanenizi keşfetme yolculuğuna çıkın. İlham verici bir kendini bulma hikayesi.",
+      duration: "4 saat 30 dakika",
+      releaseDate: "8 Ocak 2024",
+      publisher: "Storya Sesli Yayınları",
+      language: "Türkçe",
+      category: "Kişisel Gelişim",
+      price: "149,90 TL",
+    };
+  }
+  
+  // Eğer kitap hala bulunamadıysa
   if (!book) {
+    // Kitap adı sözlüğümüzden adı bul, yoksa "Kitap #ID" formatında göster
+    const bookTitle = bookTitles[params.id] || `Kitap ${params.id}`;
+    
+    // Kitabı oluştur
     book = {
       id: params.id,
-      title: `Kitap #${params.id}`,
-      author: "Bilinmiyor",
-      narrator: "Bilinmiyor",
+      title: bookTitle,
+      author: "Klasik Yazar",
+      narrator: "Profesyonel Seslendirmen",
       cover: "/book-cover.jpg",
       rating: 4.5,
       ratingCount: 1000,
-      description: "Bu kitap henüz detaylı bilgileri girilmemiş bir kitaptır.",
-      duration: "5 saat",
-      releaseDate: "2024",
+      description: "Bu kitabın sesli versiyonu yakında Storya'da olacak! Koleksiyonumuza eklediğimiz yeni içerikler için bizi takip etmeye devam edin.",
+      duration: "Yaklaşık 5-6 saat",
+      releaseDate: "Çok Yakında",
       publisher: "Storya Sesli Yayınları",
       language: "Türkçe",
-      category: "Genel",
+      category: "Yeni Eklenecek",
       price: "149,90 TL",
     };
+    
+    // Kullanıcıyı uyarmak için konsola bilgi bas
+    console.log(`ID: ${params.id} olan "${bookTitle}" kitabı henüz mevcut değil.`);
   }
   
   return <BookDetailClient book={book} />;
