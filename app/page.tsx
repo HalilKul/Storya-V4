@@ -964,16 +964,44 @@ export default function Home() {
       <div id="hero" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 md:pt-20 pb-8 sm:pb-12 md:pb-16">
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
           <div className="text-left">
-            <div className="relative mb-5 sm:mb-6 md:mb-8">
-              <span className="inline-block text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 transform transition-all duration-700 hover:scale-105 pb-2">
-                Storya
-              </span>
+            <div className="flex flex-col relative mb-3">
+              <div className="flex items-center mb-1">
+                <svg
+                  width="160"
+                  height="150"
+                  viewBox="0 0 864 864"
+                  className="transform transition-all duration-300 hover:scale-105"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g transform="translate(0.000000,864.000000) scale(0.100000,-0.100000)" fill="#3b82f6" stroke="none">
+                    <path d="M3640 5025 l0 -135 -75 0 -75 0 0 -125 0 -125 75 0 75 0 0 -233 c0 -250 8 -325 45 -397 59 -116 188 -170 408 -170 l87 0 0 120 0 120 -72 1 c-89 0 -135 15 -162 52 -20 27 -21 41 -21 265 l0 237 128 3 127 3 0 124 0 125 -130 0 -130 0 0 135 0 135 -140 0 -140 0 0 -135z"/>
+                    <path d="M4630 4895 c-159 -36 -307 -153 -375 -296 -138 -293 0 -635 301 -746 92 -33 249 -42 347 -19 185 43 343 189 398 365 28 91 28 241 -1 332 -50 164 -194 302 -370 356 -69 21 -224 25 -300 8z m258 -271 c57 -28 112 -88 138 -150 24 -58 22 -168 -6 -232 -61 -141 -239 -212 -375 -148 -101 47 -155 130 -163 251 -6 99 21 168 92 233 63 57 97 70 192 71 57 1 80 -4 122 -25z"/>
+                    <path d="M400 4760 l0 -140 855 0 855 0 0 140 0 140 -855 0 -855 0 0 -140z"/>
+                    <path d="M2823 4885 c-134 -37 -236 -120 -268 -215 -24 -72 -21 -177 6 -240 47 -109 147 -160 393 -201 160 -27 196 -46 196 -106 0 -62 -52 -93 -157 -93 -96 0 -149 28 -177 91 l-21 49 -137 0 -138 0 0 -28 c0 -85 82 -203 177 -254 86 -47 157 -62 288 -62 221 0 362 61 430 186 23 43 30 68 33 134 5 98 -7 142 -56 196 -65 72 -131 99 -328 132 -178 31 -244 64 -244 121 0 40 48 82 103 90 107 16 189 -22 203 -94 l7 -31 140 0 140 0 -6 45 c-16 116 -104 213 -242 265 -78 29 -263 38 -342 15z"/>
+                    <path d="M5895 4886 c-60 -19 -84 -34 -142 -89 l-53 -50 0 72 0 71 -140 0 -140 0 0 -525 0 -525 139 0 139 0 4 283 c3 269 4 284 26 333 43 95 117 147 226 160 l56 7 0 138 0 139 -37 -1 c-21 0 -56 -6 -78 -13z"/>
+                    <path d="M7535 4889 c-140 -29 -293 -147 -360 -279 -60 -119 -75 -285 -36 -411 56 -178 217 -324 399 -360 126 -24 302 4 382 61 l30 21 0 -40 0 -41 140 0 140 0 0 525 0 525 -140 0 -140 0 0 -41 0 -41 -33 20 c-100 58 -265 85 -382 61z m250 -273 c56 -26 129 -99 151 -151 8 -19 14 -67 14 -108 0 -59 -5 -83 -26 -126 -32 -63 -102 -122 -167 -141 -58 -16 -161 -9 -209 14 -122 59 -183 204 -143 342 13 48 27 69 73 114 65 63 100 78 192 79 49 1 78 -5 115 -23z"/>
+                    <path d="M6079 4868 c179 -454 380 -996 375 -1011 -9 -28 -63 -86 -97 -103 -16 -9 -63 -18 -103 -21 l-74 -6 0 -123 0 -124 83 0 c225 1 348 73 445 265 30 61 402 1109 402 1135 0 6 -56 10 -143 10 l-142 0 -107 -322 c-89 -269 -108 -318 -116 -297 -5 13 -54 158 -108 322 l-99 297 -162 0 -163 0 9 -22z"/>
+                    <path d="M400 4326 l0 -146 207 0 208 0 -150 -150 -150 -150 95 -95 c52 -52 99 -95 104 -95 5 0 95 84 200 188 l191 187 3 -292 2 -293 145 0 145 0 0 290 c0 160 3 290 8 290 4 0 68 -61 142 -136 74 -74 161 -158 193 -186 l58 -51 100 99 99 99 -147 147 -148 148 203 0 202 0 0 145 0 145 -217 0 c-129 0 -234 -5 -258 -11 -71 -20 -164 -69 -224 -120 -124 -103 -185 -104 -300 -5 -30 26 -77 59 -104 73 -102 51 -128 56 -374 60 l-233 5 0 -146z"/>
+                  </g>
+                </svg>
+              </div>
+              
+              <h1 className="mb-4 flex flex-wrap">
+                <div className="flex items-center gap-x-3 sm:gap-x-4 mb-1">
+                  <span className="inline-block text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 leading-tight">
+                    Kitapları
+                  </span>
+                  <span className="inline-block text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 leading-tight">
+                    Dinlemenin
+                  </span>
+                </div>
+                <div className="w-full">
+                  <span className="inline-block text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 leading-tight">
+                    Yeni Yolu
+                  </span>
+                </div>
+              </h1>
             </div>
-            
-            {/* Başlık - animasyonsuz statik versiyon */}
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-blue-600 mb-3 sm:mb-4 md:mb-6 leading-tight">
-              Kitapları Dinlemenin Yeni Yolu
-            </h1>
             
             {/* Alt başlık - animasyonsuz statik versiyon */}
             <p className="text-base sm:text-lg md:text-xl leading-6 sm:leading-7 md:leading-8 text-gray-700 mb-4 sm:mb-6 md:mb-8">
@@ -1411,19 +1439,19 @@ export default function Home() {
                   </div>
                 </div>
             
-                <div className="col-span-5 row-span-3 col-start-8 row-start-1 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[50px] transition-all duration-700" id="feature-card-2">
+                <div className="col-span-5 row-span-2 col-start-8 row-start-1 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[50px] transition-all duration-700" id="feature-card-2">
                   <VolumeX className="h-8 w-8 text-purple-600 mb-3" />
                   <h3 className="text-lg font-bold text-gray-900 mb-1">Gürültü Engelleme</h3>
                   <p className="text-gray-700 text-sm">Ortam gürültüsünü bastıran akıllı ses teknolojisi</p>
                 </div>
                 
-                <div className="col-span-5 row-span-3 col-start-8 row-start-4 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-y-[50px] transition-all duration-700" id="feature-card-3">
+                <div className="col-span-5 row-span-4 col-start-8 row-start-3 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-y-[50px] transition-all duration-700" id="feature-card-3">
                   <Clock className="h-8 w-8 text-indigo-600 mb-3" />
                   <h3 className="text-lg font-bold text-gray-900 mb-1">Zamanlayıcı</h3>
                   <p className="text-gray-700 text-sm">Uyku moduyla belirlediğin süre kadar dinle</p>
                 </div>
           
-                <div className="col-span-7 row-span-3 col-start-1 row-start-5 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg p-4 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[-50px] transition-all duration-700" id="feature-card-4">
+                <div className="col-span-7 row-span-2 col-start-1 row-start-5 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg p-4 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[-50px] transition-all duration-700" id="feature-card-4">
                   <Save className="h-6 w-6 text-blue-600 mb-2" />
                   <h3 className="text-base font-bold text-gray-900 mb-1">Çevrimdışı Dinle</h3>
                   <p className="text-gray-700 text-xs">İndirip internetsiz dinle</p>
