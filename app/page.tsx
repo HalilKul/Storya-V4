@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, ChevronDown, ChevronRight, 
-  Clock, Desktop, Globe2, Headphones, LucideProps,
+  Clock, Globe2, Headphones, LucideProps,
   Menu, Moon, Play, Repeat, Save, Smartphone, 
   Sparkles, Volume2, VolumeX, X, ArrowDown, ArrowRight, 
   ArrowUpRight, Eye, Check, PartyPopper, Heart, Loader2, 
@@ -430,7 +430,7 @@ const features = [
     description: "Çoklu dil desteği ve kişiselleştirilebilir ses seçenekleri",
   },
   {
-    icon: <Link className="h-6 w-6" />,
+    icon: <LinkIcon className="h-6 w-6" />,
     title: "E-Ticaret Platformlarına Anında Entegrasyon",
     description: "Tüm büyük e-ticaret platformlarıyla sorunsuz entegrasyon",
   },
@@ -1219,9 +1219,10 @@ export default function Home() {
                           <div className="flex items-center justify-between mb-1 sm:mb-2">
                             <span className="text-[9px] sm:text-xs text-gray-300">{author.books} Sesli Kitap</span>
                           </div>
-                          <Button
+                          <Button 
                             size="sm"
                             className="w-full h-7 sm:h-8 text-[10px] sm:text-xs md:text-sm bg-white text-blue-600 hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+                            onClick={() => router.push(`/author/${author.id}`)}
                           >
                             <Play className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-4 md:w-4 mr-1" />
                             Keşfet

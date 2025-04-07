@@ -1,6 +1,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter, Dancing_Script } from 'next/font/google';
+import Header from '@/components/Header';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 const dancingScript = Dancing_Script({ subsets: ['latin'] });
@@ -21,7 +23,13 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Header />
+        <main className="pt-16 min-h-screen">
+          {children}
+        </main>
+        <Toaster position="top-center" />
+      </body>
     </html>
   );
 }
