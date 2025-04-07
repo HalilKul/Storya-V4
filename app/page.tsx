@@ -1,10 +1,20 @@
 "use client";
 
-import { Play, Volume2, BookOpen, Headphones, Mic2, Zap, Smartphone, Globe2, Link as LinkIcon, Phone, Building2, Twitter, Instagram, Facebook, MapPin, Mail, CloudDownload, Sparkles, User, Repeat, ArrowRight, Clock, VolumeX, Save } from "lucide-react";
+import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from "@/components/ui/button";
-import { useState, useRef, useEffect } from "react";
+import { 
+  BookOpen, ChevronDown, ChevronRight, 
+  Clock, Desktop, Globe2, Headphones, LucideProps,
+  Menu, Moon, Play, Repeat, Save, Smartphone, 
+  Sparkles, Volume2, VolumeX, X, ArrowDown, ArrowRight, 
+  ArrowUpRight, Eye, Check, PartyPopper, Heart, Loader2, 
+  Star, Users, Zap, Mic2, Link as LinkIcon, Phone, Building2, Twitter, Instagram, Facebook, MapPin, Mail, CloudDownload,
+  Linkedin
+} from "lucide-react";
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Dancing_Script } from 'next/font/google';
-import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] });
 
@@ -400,12 +410,12 @@ const authors = [
 
 const features = [
   {
-    icon: <Mic2 className="h-6 w-6" />,
+    icon: <Sparkles className="h-6 w-6" />,
     title: "Yapay Zeka Destekli Seslendirme",
     description: "En gelişmiş AI ses teknolojisi ile doğal ve akıcı dinleme deneyimi",
   },
   {
-    icon: <Zap className="h-6 w-6" />,
+    icon: <Globe2 className="h-6 w-6" />,
     title: "Gerçek Zamanlı Sesli Kitap Üretimi",
     description: "Anında sesli kitap dönüşümü ve erişim imkanı",
   },
@@ -420,7 +430,7 @@ const features = [
     description: "Çoklu dil desteği ve kişiselleştirilebilir ses seçenekleri",
   },
   {
-    icon: <LinkIcon className="h-6 w-6" />,
+    icon: <Link className="h-6 w-6" />,
     title: "E-Ticaret Platformlarına Anında Entegrasyon",
     description: "Tüm büyük e-ticaret platformlarıyla sorunsuz entegrasyon",
   },
@@ -563,6 +573,7 @@ function AnimatedSubtitle({
 }
 
 export default function Home() {
+  const router = useRouter();
   const [hoveredBook, setHoveredBook] = useState<string | null>(null);
   const [hoveredAuthor, setHoveredAuthor] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState("favorites"); // Başlangıçta favori kitaplar kategorisini aktif et
@@ -585,9 +596,102 @@ export default function Home() {
     quote: true
   });
 
+  // Sürükleme işlevi için state'ler
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  
+  // Mini Demo kartı için sürükleme state'lerini kaldır
+  // const [isDraggingDemo, setIsDraggingDemo] = useState(false);
+  // const [startPosX, setStartPosX] = useState(0);
+  // const [startPosY, setStartPosY] = useState(0);
+  // const [translateX, setTranslateX] = useState(0);
+  // const [translateY, setTranslateY] = useState(0);
+  
   // Sayfa yükleme durumunu takip et
   useEffect(() => {
     setIsFullyLoaded(true); // Sayfayı anında yüklenmiş olarak işaretle
+    
+    // Görünürlüğü sıfırla ve tüm bölümleri görünür yap
+    setIsVisible({
+      hero: true,
+      books: true,
+      authors: true,
+      time: true,
+      info: true,
+      features: true,
+      quote: true
+    });
+    
+    // Time section içeriğini yükle
+    const timeItems = [
+      document.getElementById('time-item-1'),
+      document.getElementById('time-item-2'),
+      document.getElementById('time-item-3'),
+      document.getElementById('time-button'),
+      document.getElementById('time-card-1'),
+      document.getElementById('time-card-2'),
+      document.getElementById('time-card-3')
+    ];
+    
+    timeItems.forEach((item, index) => {
+      if (item) {
+        (item as HTMLElement).style.opacity = '1';
+        (item as HTMLElement).style.transform = 'translateY(0) translateX(0)';
+      }
+    });
+    
+    // Sayfa değişikliklerini dinle
+    const handlePageChange = () => {
+      // Görünürlüğü güncelle
+      setIsVisible({
+        hero: true,
+        books: true,
+        authors: true,
+        time: true,
+        info: true,
+        features: true,
+        quote: true
+      });
+      
+      // Time section için içeriği göster
+      setTimeout(() => {
+        timeItems.forEach((item, index) => {
+          if (item) {
+            (item as HTMLElement).style.opacity = '1';
+            (item as HTMLElement).style.transform = 'translateY(0) translateX(0)';
+          }
+        });
+      }, 300);
+      
+      // Features section için içeriği göster
+      setTimeout(() => {
+        const featureItems = [
+          document.getElementById('feature-item-1'),
+          document.getElementById('feature-item-2'),
+          document.getElementById('feature-item-3'),
+          document.getElementById('feature-link'),
+          document.getElementById('feature-card-1'),
+          document.getElementById('feature-card-2'),
+          document.getElementById('feature-card-3'),
+          document.getElementById('feature-card-4')
+        ];
+        
+        featureItems.forEach((item) => {
+          if (item) {
+            (item as HTMLElement).style.opacity = '1';
+            (item as HTMLElement).style.transform = 'translateY(0) translateX(0) scale(1) rotate(0)';
+          }
+        });
+      }, 500);
+    };
+    
+    // Router olaylarını dinle
+    window.addEventListener('popstate', handlePageChange);
+    
+    return () => {
+      window.removeEventListener('popstate', handlePageChange);
+    };
   }, []);
 
   // Kategori değiştiğinde kaydırma pozisyonunu sıfırla
@@ -677,34 +781,13 @@ export default function Home() {
   // Mouse işlevleri - kitaplar için
   const handleMouseEnter = () => {
     setIsScrollPaused(true);
-    if (animationFrameIdRef.current) {
-      cancelAnimationFrame(animationFrameIdRef.current);
-      animationFrameIdRef.current = null;
-    }
   };
 
   const handleMouseLeave = () => {
-    setIsScrollPaused(false);
-    if (!animationFrameIdRef.current) {
-      const scroll = () => {
-        const scrollContainer = booksScrollRef.current;
-        if (scrollContainer && !isScrollPaused) {
-          // Sağdan sola hareket
-          scrollPositionRef.current += 0.3;
-          
-          // Kenara ulaşıldığında başa dön, ama bunu kullanıcı görmeden yap
-          if (scrollPositionRef.current >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 10) {
-            // Pozisyonu direkt sıfırla, animasyonu durdurmadan
-            scrollPositionRef.current = 0;
-            scrollContainer.scrollLeft = 0;
-          } else {
-            scrollContainer.scrollLeft = scrollPositionRef.current;
-          }
-        }
-        animationFrameIdRef.current = requestAnimationFrame(scroll);
-      };
-      
-      animationFrameIdRef.current = requestAnimationFrame(scroll);
+    if (isDragging) {
+      handleMouseUp();
+    } else {
+      setIsScrollPaused(false);
     }
   };
 
@@ -749,7 +832,7 @@ export default function Home() {
     
     const handleTouchStart = (e: TouchEvent) => {
       // Dokunma başladığında kaydırmayı durdur
-      setIsScrollPaused(true);
+    setIsScrollPaused(true);
       setIsAuthorScrollPaused(true);
     };
     
@@ -855,17 +938,36 @@ export default function Home() {
     }
   }, []);
 
+  // Kitaplar için geliştirilmiş sürükleme işlevselliği
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!booksScrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - booksScrollRef.current.offsetLeft);
+    setScrollLeft(booksScrollRef.current.scrollLeft);
+  };
+  
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !booksScrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - booksScrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2.0;
+    booksScrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+  
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+  
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-blue-50 to-purple-50 overflow-x-hidden">
       {/* Hero Section */}
       <div id="hero" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 md:pt-20 pb-8 sm:pb-12 md:pb-16">
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
           <div className="text-left">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4 md:mb-6">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-2 rounded-lg shadow-lg transform hover:scale-110 transition-all duration-300">
-                <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8 text-white" />
-              </div>
-              <span className="text-base sm:text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Storya</span>
+            <div className="relative mb-5 sm:mb-6 md:mb-8">
+              <span className="inline-block text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 transform transition-all duration-700 hover:scale-105 pb-2">
+                Storya
+              </span>
             </div>
             
             {/* Başlık - animasyonsuz statik versiyon */}
@@ -956,16 +1058,19 @@ export default function Home() {
           <div className="px-4 mb-4 sm:hidden">
             <h3 className="text-sm font-medium text-gray-700 bg-blue-50/50 rounded-lg py-2 px-3 inline-block">
               {categories.find(cat => cat.id === activeCategory)?.title}
-            </h3>
-          </div>
-
+              </h3>
+            </div>
+            
           {/* Books Grid with Horizontal Scroll - Enhanced for touch devices */}
           <div className="relative animate-fadeIn" style={{animationDelay: "0.3s"}}>
             <div 
               ref={booksScrollRef}
-              className="overflow-x-auto touch-pan-x no-scrollbar pb-2" 
+              className={`overflow-x-auto touch-pan-x no-scrollbar pb-2 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
             >
               <div className="flex gap-2 sm:gap-3 md:gap-4 px-4 md:px-8 pb-4 sm:pb-6 md:pb-8 min-w-max">
                 {categories
@@ -973,10 +1078,10 @@ export default function Home() {
                   ?.books.map((book, i) => (
                     <div
                       key={book.id}
-                      className="relative flex-none w-[120px] sm:w-[130px] md:w-[176px] transition-all duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-xl animate-fadeIn snap-start tap-highlight-transparent"
+                      className={`relative flex-none w-[120px] sm:w-[130px] md:w-[176px] transition-all duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-xl animate-fadeIn snap-start tap-highlight-transparent ${isDragging ? 'pointer-events-none' : ''}`}
                       style={{animationDelay: `${0.05 * i}s`}}
-                      onMouseEnter={() => setHoveredBook(book.id)}
-                      onMouseLeave={() => setHoveredBook(null)}
+                      onMouseEnter={() => !isDragging && setHoveredBook(book.id)}
+                      onMouseLeave={() => !isDragging && setHoveredBook(null)}
                       onTouchStart={(e) => {
                         // Daha iyi dokunma davranışı
                         e.stopPropagation();
@@ -991,49 +1096,57 @@ export default function Home() {
                         }, 1000);
                       }}
                     >
-                      <Link href={`/book/${book.id}`} className="block">
-                        <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-blue-100 to-purple-100 transition-all duration-500">
-                          <div className="w-full h-full flex items-center justify-center">
-                            <BookOpen className="h-10 w-10 sm:h-12 sm:w-12 text-blue-400 transition-all duration-300 transform group-hover:scale-110" />
+                      {/* Normal kitap kapağı - Link içinde */}
+                      {hoveredBook !== book.id && (
+                        <Link href={`/book/${book.id}`} className="block">
+                          <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-blue-100 to-purple-100 transition-all duration-500">
+                            <div className="w-full h-full flex items-center justify-center">
+                              <BookOpen className="h-10 w-10 sm:h-12 sm:w-12 text-blue-400 transition-all duration-300 transform group-hover:scale-110" />
+                            </div>
                           </div>
-                        {hoveredBook === book.id && (
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-purple-600/90 p-2 sm:p-3 md:p-4 flex flex-col justify-between text-white transition-all duration-500 animate-fadeIn">
+                          <div className="mt-1.5 sm:mt-2 md:mt-3">
+                            <h3 className="font-semibold text-[10px] sm:text-xs md:text-sm text-gray-900 truncate">{book.title}</h3>
+                            <p className="text-[9px] sm:text-xs text-gray-600 truncate">{book.author}</p>
+                          </div>
+                        </Link>
+                      )}
+                      
+                      {/* Hover durumunda bilgi kartı - Link dışında */}
+                      {hoveredBook === book.id && (
+                        <div>
+                          <div className="relative aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden shadow-lg transition-all duration-500">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 to-purple-600/90 p-2 sm:p-3 md:p-4 flex flex-col justify-between text-white animate-fadeIn">
                               <div>
                                 <h3 className="text-xs sm:text-sm md:text-base font-semibold mb-0.5 sm:mb-1">{book.title}</h3>
                                 <p className="text-[10px] sm:text-xs md:text-sm opacity-80 mb-0.5 sm:mb-1">{book.author}</p>
                               </div>
                               <div>
                                 <p className="text-[9px] sm:text-xs leading-tight mb-2 sm:mb-3 md:mb-4 line-clamp-3 md:line-clamp-none">{book.description}</p>
-                            <Button
-                              size="sm"
-                                  className="w-full h-7 sm:h-8 text-[10px] sm:text-xs md:text-sm bg-white text-blue-600 hover:bg-gray-100 flex items-center justify-center transition-all duration-300 transform hover:scale-105"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    // Kitap bilgisi sayfasına git
-                                    window.location.href = `/book/${book.id}`;
-                                  }}
-                            >
+                                <Button 
+                                  className="w-full h-7 sm:h-8 text-[10px] sm:text-xs md:text-sm bg-white text-blue-600 hover:bg-gray-100 flex items-center justify-center transition-all duration-300 transform hover:scale-105 rounded-md font-medium"
+                                  onClick={() => router.push(`/book/${book.id}`)}
+                                >
                                   <Play className="h-2.5 w-2.5 sm:h-3 sm:w-3 md:h-4 md:w-4 mr-1" />
-                              Dinle
-                            </Button>
+                                  Dinle
+                                </Button>
                               </div>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                        <div className="mt-1.5 sm:mt-2 md:mt-3">
-                          <h3 className="font-semibold text-[10px] sm:text-xs md:text-sm text-gray-900 truncate">{book.title}</h3>
-                          <p className="text-[9px] sm:text-xs text-gray-600 truncate">{book.author}</p>
-                      </div>
-                      </Link>
+                          <div className="mt-1.5 sm:mt-2 md:mt-3">
+                            <h3 className="font-semibold text-[10px] sm:text-xs md:text-sm text-gray-900 truncate">{book.title}</h3>
+                            <p className="text-[9px] sm:text-xs text-gray-600 truncate">{book.author}</p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
-              </div>
+        </div>
             </div>
             {/* Gradient overlays for scroll indication */}
             <div className="absolute left-0 top-0 bottom-8 w-10 sm:w-16 md:w-32 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
             <div className="absolute right-0 top-0 bottom-8 w-10 sm:w-16 md:w-32 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
           </div>
-          
+
           {/* Category Navigation - Mobile only */}
           <div className="flex justify-center mt-4 sm:hidden px-4">
             <div className="flex space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1 shadow-sm">
@@ -1049,8 +1162,8 @@ export default function Home() {
                   aria-label={category.title}
                 />
               ))}
-        </div>
-      </div>
+            </div>
+          </div>
 
           {/* Mobile Kategori Seçimi - Alternatif Yöntem */}
           <div className="mt-6 px-4 sm:hidden">
@@ -1065,9 +1178,9 @@ export default function Home() {
                 </option>
               ))}
             </select>
-          </div>
-        </div>
-      </div>
+            </div>
+            </div>
+            </div>
 
       {/* Authors Section - Better optimized for mobile and touch */}
       <div id="authors" className={`bg-gradient-to-b from-blue-50 to-purple-50 pb-10 sm:pb-16 md:pb-24 transition-all duration-1000 transform ${isVisible.authors ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -1096,7 +1209,7 @@ export default function Home() {
                     <div className="relative aspect-square rounded-lg sm:rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-purple-100 to-blue-100 transition-all duration-500">
                       <div className="w-full h-full flex items-center justify-center">
                         <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-full p-3 sm:p-4">
-                          <User className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                          <Users className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                         </div>
                       </div>
                       {hoveredAuthor === author.id && (
@@ -1220,9 +1333,9 @@ export default function Home() {
       {/* Features Section - Taşındı */}
       <div id="features" className="init-visible bg-gradient-to-b from-purple-50 to-white py-16 sm:py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 text-center mb-10 sm:mb-16 leading-[1.3] py-2 tracking-wide">
             Storya Özellikleri
-                </h2>
+            </h2>
           
           <div className="grid md:grid-cols-2 gap-10 sm:gap-12 md:gap-16 items-center">
             {/* Sol taraf - İçerik */}
@@ -1241,8 +1354,8 @@ export default function Home() {
                       <p className="text-gray-700">Doğal ses tonlaması ile kitaplar sanki bir insan tarafından seslendirilmiş gibi.</p>
                     </div>
                   </div>
-                </div>
-                
+          </div>
+
                 <div className="group bg-gradient-to-r hover:bg-gradient-to-br from-blue-50 to-blue-50/30 hover:from-blue-100 hover:to-purple-100 p-5 rounded-xl transition-all duration-500 hover:shadow-lg transform hover:-translate-y-1 hover:scale-[1.01] opacity-0 translate-x-[-50px] transition-all duration-700 feature-item" 
                   id="feature-item-2">
                   <div className="flex items-start gap-4">
@@ -1255,9 +1368,9 @@ export default function Home() {
                       <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Çoklu Dil Desteği</h3>
                       <p className="text-gray-700">İstediğin dilde kitap dinleme imkanı sunar, çeviri engeli olmadan.</p>
                     </div>
-                  </div>
-                </div>
-                
+            </div>
+          </div>
+
                 <div className="group bg-gradient-to-r hover:bg-gradient-to-br from-blue-50 to-blue-50/30 hover:from-blue-100 hover:to-purple-100 p-5 rounded-xl transition-all duration-500 hover:shadow-lg transform hover:-translate-y-1 hover:scale-[1.01] opacity-0 translate-x-[-50px] transition-all duration-700 feature-item" 
                   id="feature-item-3">
                   <div className="flex items-start gap-4">
@@ -1272,8 +1385,8 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
-              
+            </div>
+            
               <Link href="#tum-ozellikler" className="inline-flex items-center gap-2 text-blue-600 font-medium group transition-all duration-300 hover:text-purple-600 opacity-0 translate-y-10 transition-all duration-700" id="feature-link">
                 Tüm özellikleri keşfet
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
@@ -1296,26 +1409,26 @@ export default function Home() {
                     <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded">Yeni Çıkanlar</span>
                   </div>
                 </div>
-                
+            
                 <div className="col-span-5 row-span-3 col-start-8 row-start-1 bg-gradient-to-br from-purple-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[50px] transition-all duration-700" id="feature-card-2">
                   <VolumeX className="h-8 w-8 text-purple-600 mb-3" />
                   <h3 className="text-lg font-bold text-gray-900 mb-1">Gürültü Engelleme</h3>
                   <p className="text-gray-700 text-sm">Ortam gürültüsünü bastıran akıllı ses teknolojisi</p>
                 </div>
                 
-                <div className="col-span-8 row-span-2 col-start-5 row-start-4 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-y-[50px] transition-all duration-700" id="feature-card-3">
+                <div className="col-span-5 row-span-3 col-start-8 row-start-4 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-2xl shadow-lg p-5 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-y-[50px] transition-all duration-700" id="feature-card-3">
                   <Clock className="h-8 w-8 text-indigo-600 mb-3" />
                   <h3 className="text-lg font-bold text-gray-900 mb-1">Zamanlayıcı</h3>
                   <p className="text-gray-700 text-sm">Uyku moduyla belirlediğin süre kadar dinle</p>
                 </div>
-                
-                <div className="col-span-4 row-span-2 col-start-1 row-start-5 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg p-4 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[-50px] transition-all duration-700" id="feature-card-4">
+          
+                <div className="col-span-7 row-span-3 col-start-1 row-start-5 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl shadow-lg p-4 flex flex-col justify-center transform transition-all duration-500 hover:shadow-xl hover:scale-[1.02] opacity-0 translate-x-[-50px] transition-all duration-700" id="feature-card-4">
                   <Save className="h-6 w-6 text-blue-600 mb-2" />
                   <h3 className="text-base font-bold text-gray-900 mb-1">Çevrimdışı Dinle</h3>
                   <p className="text-gray-700 text-xs">İndirip internetsiz dinle</p>
                 </div>
               </div>
-            </div>
+        </div>
           </div>
         </div>
       </div>
@@ -1382,7 +1495,7 @@ export default function Home() {
               window.featuresAnimStarted = true;
               
               // Start animations with delay for features section - sağdan sola animasyon
-              setTimeout(() => {
+      setTimeout(() => {
                 const featureItems = document.querySelectorAll('.feature-item');
                 featureItems.forEach((item, index) => {
                   setTimeout(() => {
@@ -1620,7 +1733,7 @@ export default function Home() {
       <div id="howto" className="bg-gradient-to-br from-indigo-50 to-purple-50 py-16 sm:py-24 md:py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 leading-[1.3] py-2 tracking-wide">
               Storya'yla Tanış!
             </h2>
             <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
@@ -1674,7 +1787,9 @@ export default function Home() {
                   </div>
             
             <div className="relative order-1 md:order-2">
-              <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-md mx-auto transform transition-all duration-700 hover:scale-105">
+              <div 
+                className="bg-white p-8 rounded-3xl shadow-2xl max-w-md mx-auto transform transition-all duration-700 hover:scale-105"
+              >
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-indigo-600 mb-2">Mini Demo</h3>
                   <div className="h-0.5 w-16 bg-gradient-to-r from-indigo-400 to-purple-500 mx-auto"></div>
@@ -1693,9 +1808,9 @@ export default function Home() {
                         Demo Dinle
                       </Link>
                     </Button>
-            </div>
-          </div>
-
+                  </div>
+                </div>
+                
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Hemen deneyin ve Storya farkını keşfedin!</p>
                 </div>
@@ -1710,15 +1825,15 @@ export default function Home() {
       </div>
 
       {/* Info Cards Container - Mobile optimized - Removing the Meet Storya Section */}
-      <div id="info" className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 md:py-24 transition-all duration-1000 transform ${isVisible.info ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <div id="info" className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 transition-all duration-1000 transform ${isVisible.info ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         {/* Where is Storya Section - Removed */}
       </div>
 
       {/* Sen Neredeysen Storya Orada! - Modern tasarımla sayfaya direkt yerleştirildi */}
-      <div id="whereisstorya" className="bg-gradient-to-br from-blue-50 to-purple-50 py-16 sm:py-24 md:py-32 overflow-hidden">
+      <div id="whereisstorya" className="bg-gradient-to-br from-blue-50 to-purple-50 py-12 sm:py-16 md:py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 leading-[1.3] py-2 tracking-wide">
               Sen Neredeysen Storya Orada!
               </h2>
             <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
@@ -1787,89 +1902,159 @@ export default function Home() {
       {/* Quote Section - Better Responsive Design */}
       <div id="quote" className={`bg-white py-10 sm:py-16 border-y border-gray-100 transition-all duration-1000 transform ${isVisible.quote ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <blockquote className="text-xl sm:text-2xl md:text-3xl text-gray-700 leading-relaxed mb-4 sm:mb-6 italic">
-            "Her hikaye bir yolculuktur; dinlediğinizde, bu yolculuğa başka bir boyut katarsınız."
-          </blockquote>
-          <cite className={`${dancingScript.className} text-lg sm:text-xl md:text-2xl text-gray-600 inline-block animate-float`}>— Neil Gaiman</cite>
+          <div className="text-center">
+            <p className="text-xl sm:text-2xl md:text-3xl text-gray-700 mb-8 italic font-light">
+              "Her hikaye bir yolculuktur; dinlediğinizde, bu yolculuğa başka bir boyut katarsınız."
+            </p>
+            <p className="text-gray-500 text-lg sm:text-xl md:text-xl mt-4 italic font-medium">
+              — Neil Gaiman
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Modern Footer Section */}
-      <footer className="bg-gradient-to-br from-gray-900 to-gray-800 pt-10 sm:pt-16 md:pt-20 pb-6 sm:pb-8 md:pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-gradient-to-b from-gray-950 to-black pt-20 pb-10 relative overflow-hidden">
+        {/* Arka plan animasyonu */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+          <div className="absolute top-0 left-0 h-full w-[1px] bg-gradient-to-b from-transparent via-blue-500 to-transparent"></div>
+          <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-transparent via-purple-500 to-transparent"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Logo Section */}
-          <div className="flex flex-col items-center justify-center mb-8 sm:mb-10 md:mb-12">
-            <div className="flex items-center justify-center bg-white/10 backdrop-blur-sm p-3 sm:p-4 rounded-full h-12 w-12 sm:h-16 sm:w-16 mb-2 sm:mb-3">
-              <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400" />
+          <div className="flex flex-col items-center justify-center mb-16">
+            <div className="relative group">
+              <Image
+                src="/images/SAYDAM LOGO.png"
+                alt="Storya Logo"
+                width={280}
+                height={100}
+                className="h-auto invert transition-all duration-500 group-hover:scale-105"
+                priority
+              />
+              <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500"></div>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-              Storya
-            </h2>
           </div>
 
-          {/* CTA Section */}
-          <div className="text-center mb-8 sm:mb-10 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-              Kitaplarını şimdi dinlemeye başla.
-            </h2>
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-4 sm:mb-6 md:mb-8 max-w-2xl mx-auto">
-              Storya'yı deneyimle ve kitaplarınla yeni bir bağ kur.
-            </p>
-            {/* CTA butonları kaldırıldı */}
-          </div>
-
-          {/* Footer Content - Improved for Mobile */}
-          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 pb-6 sm:pb-8 md:pb-12 border-b border-gray-800">
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white mb-2 sm:mb-4">Ürün</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Özellikler</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Fiyatlandırma</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Demo</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">API</a></li>
+          {/* Footer Links */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
+            {/* Ürün */}
+            <div className="flex flex-col items-center transform transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base font-bold text-white uppercase tracking-wide mb-6 text-center relative">
+                <span className="relative z-10">Ürün</span>
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </h3>
+              <ul className="space-y-3 text-center w-full">
+                {["Özellikler", "Fiyatlandırma", "Demo", "API"].map((item, index) => (
+                  <li key={item} style={{animationDelay: `${index * 100}ms`}} className="animate-fadeIn opacity-0">
+                    <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-300 block py-1 hover:bg-white/5 rounded">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white mb-2 sm:mb-4">Şirket</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Hakkımızda</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Kariyer</a></li>
+            
+            {/* Şirket */}
+            <div className="flex flex-col items-center transform transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base font-bold text-white uppercase tracking-wide mb-6 text-center relative">
+                <span className="relative z-10">Şirket</span>
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </h3>
+              <ul className="space-y-3 text-center w-full">
+                {["Hakkımızda", "Blog", "Kariyer"].map((item, index) => (
+                  <li key={item} style={{animationDelay: `${index * 100 + 300}ms`}} className="animate-fadeIn opacity-0">
+                    <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-300 block py-1 hover:bg-white/5 rounded">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-white mb-2 sm:mb-4">Kaynaklar</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Dokümantasyon</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Yardım Merkezi</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Topluluk</a></li>
+            
+            {/* Kaynaklar */}
+            <div className="flex flex-col items-center transform transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base font-bold text-white uppercase tracking-wide mb-6 text-center relative">
+                <span className="relative z-10">Kaynaklar</span>
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </h3>
+              <ul className="space-y-3 text-center w-full">
+                {["Dokümantasyon", "Yardım Merkezi", "Topluluk"].map((item, index) => (
+                  <li key={item} style={{animationDelay: `${index * 100 + 600}ms`}} className="animate-fadeIn opacity-0">
+                    <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-300 block py-1 hover:bg-white/5 rounded">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="col-span-1 sm:col-span-3 md:col-span-1 lg:col-span-1 space-y-3">
-              <h3 className="font-semibold text-white mb-2 sm:mb-4">İletişim</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="https://www.instagram.com/grouptaiga/" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center"><Instagram className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" /> Instagram</a></li>
-                <li><a href="https://www.linkedin.com/company/taiga-group/posts/?feedView=all" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center"><LinkIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" /> LinkedIn</a></li>
-                <li><a href="https://www.facebook.com/grouptaiga" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center"><Facebook className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" /> Facebook</a></li>
-                <li><a href="mailto:hello@grouptaiga.com" className="text-sm text-gray-400 hover:text-white transition-colors flex items-center"><Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" /> E-posta</a></li>
-              </ul>
-            </div>
-            <div className="col-span-1 sm:col-span-3 md:col-span-2 lg:col-span-1 space-y-3">
-              <h3 className="font-semibold text-white mb-2 sm:mb-4">Yasal</h3>
-              <ul className="space-y-1.5 sm:space-y-2">
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Gizlilik Politikası</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Kullanım Şartları</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">KVKK</a></li>
-                <li><a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Çerez Politikası</a></li>
+            
+            {/* Yasal */}
+            <div className="flex flex-col items-center transform transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-base font-bold text-white uppercase tracking-wide mb-6 text-center relative">
+                <span className="relative z-10">Yasal</span>
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </h3>
+              <ul className="space-y-3 text-center w-full">
+                {["Gizlilik Politikası", "Kullanım Şartları", "KVKK", "Çerez Politikası"].map((item, index) => (
+                  <li key={item} style={{animationDelay: `${index * 100 + 900}ms`}} className="animate-fadeIn opacity-0">
+                    <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-300 block py-1 hover:bg-white/5 rounded">
+                      {item}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
           
+          {/* Modern Ayraç */}
+          <div className="w-full py-6 relative overflow-hidden">
+            <div className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+            <svg className="absolute w-full h-12 -top-6 left-0 right-0" viewBox="0 0 1200 30" preserveAspectRatio="none">
+              <path 
+                d="M0,0 C300,20 600,30 1200,5 L1200,30 L0,30 Z" 
+                fill="none" 
+                stroke="url(#grad)" 
+                strokeWidth="1"
+                className="animate-pulse"
+              />
+              <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="rgba(139, 92, 246, 0)" />
+                  <stop offset="50%" stopColor="rgba(139, 92, 246, 0.5)" />
+                  <stop offset="100%" stopColor="rgba(139, 92, 246, 0)" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          
           {/* Bottom Bar */}
-          <div className="flex justify-center pt-4 sm:pt-6 md:pt-8">
-            <p className="text-xs sm:text-sm text-gray-400">
-              © {new Date().getFullYear()} Storya. Tüm hakları saklıdır.
+          <div className="flex flex-col md:flex-row justify-between items-center mt-6">
+            <p className="text-sm text-gray-500 mb-6 md:mb-0 relative group">
+              <span className="transition-colors duration-300 group-hover:text-gray-300">© {new Date().getFullYear()} Storya. Tüm hakları saklıdır.</span>
+              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-hover:w-full"></span>
             </p>
+            <div className="flex space-x-8">
+              <a href="https://www.instagram.com/grouptaiga/" className="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 relative group">
+                <span className="absolute -inset-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <Instagram className="w-5 h-5 relative z-10" />
+              </a>
+              <a href="https://www.linkedin.com/company/taiga-group/posts/?feedView=all" className="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 relative group">
+                <span className="absolute -inset-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <Linkedin className="w-5 h-5 relative z-10" />
+              </a>
+              <a href="https://www.facebook.com/grouptaiga" className="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 relative group">
+                <span className="absolute -inset-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <Facebook className="w-5 h-5 relative z-10" />
+              </a>
+              <a href="mailto:hello@grouptaiga.com" className="text-gray-400 hover:text-white transition-all duration-300 transform hover:scale-110 relative group">
+                <span className="absolute -inset-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <Mail className="w-5 h-5 relative z-10" />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
